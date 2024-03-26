@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
   totalElements: number = 0;
 
   constructor(private productService: ProductService,
-              private route: ActivatedRoute) {
+    private route: ActivatedRoute) {
 
   }
   ngOnInit(): void {
@@ -76,6 +76,12 @@ export class ProductListComponent implements OnInit {
         this.products = data;
       }
     );
+  }
+
+  updatePageSize(pageSize: string) {
+    this.pageSize = +pageSize;
+    this.pageNumber = 1;
+    this.listProducts();
   }
 
 }
