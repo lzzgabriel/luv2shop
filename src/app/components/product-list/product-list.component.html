@@ -57,7 +57,9 @@
                                 <ngb-pagination [(page)]="pageNumber"
                                                 [pageSize]="pageSize"
                                                 [collectionSize]="totalElements"
-                                                (pageChange)="listProducts()">
+                                                (pageChange)="listProducts()"
+                                                [maxSize]="5"
+                                                [boundaryLinks]="true">
                                 </ngb-pagination>
                             </div>
                             <div class="col-md-3 mt-2" style="text-align: right;">
