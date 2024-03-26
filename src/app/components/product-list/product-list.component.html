@@ -56,6 +56,8 @@
                             <div class="col-md-9" style="padding-left: 30%;">
                                 <ngb-pagination [(page)]="pageNumber"
                                                 [pageSize]="pageSize"
+                                                [ellipses]="false"
+                                                [rotate]="true"
                                                 [collectionSize]="totalElements"
                                                 (pageChange)="listProducts()"
                                                 [maxSize]="5"
