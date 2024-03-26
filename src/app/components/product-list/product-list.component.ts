@@ -75,7 +75,7 @@ export class ProductListComponent implements OnInit {
 
     this.previousKeyword = keyword;
 
-    this.productService.searchProductsPaginate(keyword, this.pageNumber - 1 , this.pageSize)
+    this.productService.searchProductsPaginate(keyword, this.pageNumber - 1, this.pageSize)
       .subscribe(this.processResult());
   }
 
@@ -92,6 +92,9 @@ export class ProductListComponent implements OnInit {
     this.pageSize = +pageSize;
     this.pageNumber = 1;
     this.listProducts();
+  }
+
+  addToCart(product: Product) {
   }
 
 }
