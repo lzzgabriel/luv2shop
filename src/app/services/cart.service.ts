@@ -37,6 +37,14 @@ export class CartService {
     this.computeCartTotals();
   }
   computeCartTotals() {
-    throw new Error('Method not implemented.');
+    let totalPriceValue: number = 0;
+    let totalQuantityValue: number = 0;
+    this.cartItems.forEach((value) => {
+      totalPriceValue += value.quantity * value.unitPrice;
+      totalQuantityValue += value.quantity;
+    });
+
+    this.totalPrice.next(totalPriceValue);
+    this.totalQuantity.next(totalQuantityValue);
   }
 }
