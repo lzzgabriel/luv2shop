@@ -15,15 +15,10 @@ export class CartService {
 
   addToCart(cartItem: CartItem) {
     let exists: boolean = false;
-    let existing: CartItem | undefined;
+    let existing: CartItem | undefined = undefined;
 
     if (this.cartItems.length > 0) {
-      for (let item of this.cartItems) {
-        if (item.id === cartItem.id) {
-          existing = item;
-          break;
-        }
-      }
+      existing = this.cartItems.find(item => item.id === cartItem.id);
 
       exists = existing != undefined;
     }
@@ -36,13 +31,15 @@ export class CartService {
 
     this.computeCartTotals();
   }
+
   computeCartTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
-    this.cartItems.forEach((value) => {
-      totalPriceValue += value.quantity * value.unitPrice;
-      totalQuantityValue += value.quantity;
-    });
+    
+    for (let currentCartItem of this.cartItems) {
+      totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
+      totalQuantityValue += currentCartItem.quantity;
+    }
 
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue);

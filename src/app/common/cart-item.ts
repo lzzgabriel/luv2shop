@@ -13,7 +13,9 @@ export class CartItem {
         this.name = product.name;
         this.imageUrl = product.imageUrl;
         this.unitPrice = product.unitPrice;
-        this.quantity = product.unitsInStock;
+        // The constructor is called only when we add an item to the cart
+        // for the first time, so we set the quantity to 1
+        this.quantity = 1;
     }
 
 }
