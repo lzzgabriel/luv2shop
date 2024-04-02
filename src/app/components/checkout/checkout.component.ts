@@ -75,4 +75,19 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  handleMonthsAndYears() {
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+
+    const currentYear = new Date().getFullYear();
+    const selectedYear = Number(creditCardFormGroup?.value.expirationYear);
+
+    let startMonth: number;
+
+    startMonth = (currentYear === selectedYear) ? (new Date().getMonth() + 1) : 1;
+
+    this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
+      data => this.creaditCardMonths = data
+    )
+  }
+
 }
