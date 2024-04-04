@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Luv2ShopFormService } from '../../services/luv2-shop-form.service';
 import { Country } from '../../common/country';
+import { State } from '../../common/state';
 
 @Component({
   selector: 'app-checkout',
@@ -19,6 +20,9 @@ export class CheckoutComponent implements OnInit {
   creaditCardMonths: number[] = [];
 
   countries: Country[] = [];
+
+  shippingStates: State[] = [];
+  billingStates: State[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private luv2ShopFormService: Luv2ShopFormService) { }
@@ -77,8 +81,11 @@ export class CheckoutComponent implements OnInit {
     if (event.target.checked) {
       this.checkoutFormGroup.controls['billingAddress']
         .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+
+      this.billingStates = this.shippingStates;
     } else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
+      this.billingStates = [];
     }
   }
 
@@ -94,6 +101,23 @@ export class CheckoutComponent implements OnInit {
 
     this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
       data => this.creaditCardMonths = data
+    )
+  }
+
+  getStates(formGroupName: string) {
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+    const code = formGroup?.value.country.code;
+
+    this.luv2ShopFormService.getStates(code).subscribe(
+      data => {
+        if (formGroupName === 'shippingAddress') {
+          this.shippingStates = data;
+        } else {
+          this.billingStates = data;
+        }
+
+        formGroup?.get('state')?.setValue(data[0]);
+      }
     )
   }
 
