@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Luv2ShopFormService } from '../../services/luv2-shop-form.service';
+import { Country } from '../../common/country';
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +17,8 @@ export class CheckoutComponent implements OnInit {
 
   creaditCardYears: number[] = [];
   creaditCardMonths: number[] = [];
+
+  countries: Country[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private luv2ShopFormService: Luv2ShopFormService) { }
@@ -59,7 +62,11 @@ export class CheckoutComponent implements OnInit {
 
     this.luv2ShopFormService.getCreditCardYears().subscribe(
       data => this.creaditCardYears = data
-    )
+    );
+
+    this.luv2ShopFormService.getCountries().subscribe(
+      data => this.countries = data
+    );
   }
 
   onSubmit() {
