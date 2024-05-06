@@ -7,12 +7,11 @@
         <button class="security-btn" (click)="auth.logout({ logoutParams: { returnTo: 'http://localhost:4200' } })">
             Log out
         </button>
+        <button routerLink="/members" class="security-btn ml-1">Member</button>
     </ng-container>
 
     <ng-template #loggedOut>
         <button class="security-btn" (click)="auth.loginWithRedirect()">Log in</button>
     </ng-template>
-
-    <button routerLink="/members" class="security-btn ml-1">Member</button>
 
 </div>
