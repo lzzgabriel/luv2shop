@@ -11,7 +11,7 @@ export class CartService {
   totalPrice: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   totalQuantity: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  storage: Storage = sessionStorage
+  storage: Storage = localStorage
 
   constructor() {
     let data = JSON.parse(this.storage.getItem('cartItems')!)
