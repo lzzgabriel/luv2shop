@@ -1,11 +1,16 @@
 <div class="login-status-header">
 
-    <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
-        Welcome back {{ userFullName }}!
-    </div>
+    <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+        <div *ngIf="auth.user$ | async as user" class="login-status-user-info">
+            Welcome back {{ user.name }}!
+        </div>
+        <button class="security-btn" (click)="auth.logout({ logoutParams: { returnTo: 'http://localhost:4200' } })">
+            Log out
+        </button>
+    </ng-container>
 
-    <button *ngIf="!isAuthenticated" routerLink="/login" class="security-btn">Login</button>
-
-    <button *ngIf="isAuthenticated" (click)="logout()" class="security-btn">Logout</button>
+    <ng-template #loggedOut>
+        <button class="security-btn" (click)="auth.loginWithRedirect()">Log in</button>
+    </ng-template>
 
 </div>
