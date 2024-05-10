@@ -3,14 +3,19 @@
     right:0;
     min-width:95px;
     color:#fff;
-    border:10px solid #205b8d;
+    border:1px solid #205b8d;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
     border-radius:43px;
     background:#205b8d
 }
 
+.security-btn:hover{
+    background:#05143f
+}
+
 .login-status-header{
+    height: 45px;
     display:-webkit-box;
     display:-webkit-flex;
     display:-moz-box;
@@ -19,7 +24,6 @@
 }
 
 .login-status-user-info {
-    line-height:43px;
     border:1px;
     padding:0 17px;
     -webkit-border-radius:3px;
