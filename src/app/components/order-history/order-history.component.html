@@ -1,18 +1,20 @@
-<h3>Your orders</h3>
+<div class="main-content">
+    <h3>Your orders</h3>
 
-<div *ngIf="orderHistoryList.length > 0">
-    <table class="table table-bordered">
-        <tr>
-            <th width="20%">Order tracking number</th>
-            <th width="10%">Total price</th>
-            <th width="10%">Total quantity</th>
-            <th width="10%">Date</th>
-        </tr>
-        <tr *ngFor="let item of orderHistoryList">
-            <td>{{ item.orderTrackingNumber }}</td>
-            <td>{{ item.totalPrice | currency: 'USD' }}</td>
-            <td>{{ item.totalQuantity }}</td>
-            <td>{{ item.dateCreated | date: 'medium' }}</td>
-        </tr>
-    </table>
+    <div *ngIf="orderHistoryList.length > 0">
+        <table class="table table-bordered">
+            <tr>
+                <th width="20%">Order tracking number</th>
+                <th width="10%">Total price</th>
+                <th width="10%">Total quantity</th>
+                <th width="10%">Date</th>
+            </tr>
+            <tr *ngFor="let item of orderHistoryList">
+                <td>{{ item.orderTrackingNumber }}</td>
+                <td>{{ item.totalPrice | currency: 'USD' }}</td>
+                <td>{{ item.totalQuantity }}</td>
+                <td>{{ item.dateCreated | date: 'medium' }}</td>
+            </tr>
+        </table>
+    </div>
 </div>
