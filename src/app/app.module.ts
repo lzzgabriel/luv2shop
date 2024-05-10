@@ -18,6 +18,7 @@ import { LoginStatusComponent } from './components/login-status/login-status.com
 import myAppConfig from './config/my-app-config';
 import { AuthGuard, AuthService, provideAuth0 } from '@auth0/auth0-angular';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 const oktaConfig = myAppConfig.oidc;
 
@@ -49,7 +50,8 @@ const routes: Routes = [
     CartDetailsComponent,
     CheckoutComponent,
     LoginStatusComponent,
-    MembersPageComponent
+    MembersPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
