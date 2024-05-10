@@ -27,6 +27,7 @@ function sendToLoginPage(auth: AuthService) {
 }
 
 const routes: Routes = [
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard], data: {onAuthRequired: sendToLoginPage}},
   {path: 'members', component: MembersPageComponent, canActivate: [AuthGuard], data: {onAuthRequired: sendToLoginPage}},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
