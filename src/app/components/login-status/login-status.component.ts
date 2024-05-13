@@ -14,13 +14,12 @@ export class LoginStatusComponent implements OnInit {
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}
 
   ngOnInit(): void {
-  }
-
-  getUserDetails() {
-    if (this.auth.isAuthenticated$) {
-      let email = (this.auth.user$ as User).email
-      this.storage.setItem('user_email', JSON.stringify(email))
-    }
+    this.auth.user$.subscribe(
+      data => {
+        let email = data?.email!
+        this.storage.setItem('user_email', JSON.stringify(email))
+      }
+    )
   }
 
   logout() {
