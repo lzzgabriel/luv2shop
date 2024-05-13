@@ -18,7 +18,8 @@ export class LoginStatusComponent implements OnInit {
 
   getUserDetails() {
     if (this.auth.isAuthenticated$) {
-      this.storage.setItem('user_email', JSON.stringify((this.auth.user$ as User).email))
+      let email = (this.auth.user$ as User).email
+      this.storage.setItem('user_email', JSON.stringify(email))
     }
   }
 
