@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { from, lastValueFrom, Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     this.auth.idTokenClaims$.subscribe(
       idToken => this.accessToken = idToken?.__raw!
     )
-    const secureEndpoints = ['http://localhost:8080/api/orders']
+    const secureEndpoints = [environment.luv2shopApiUrl + '/orders']
     if (secureEndpoints.some(url => req.urlWithParams.includes(url))) {
       req = req.clone({
         setHeaders: {
