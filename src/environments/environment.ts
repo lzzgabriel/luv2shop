@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    luv2shopApiUrl: ""
+    luv2shopApiUrl: "",
+    stripePublishableKey: ""
 };
