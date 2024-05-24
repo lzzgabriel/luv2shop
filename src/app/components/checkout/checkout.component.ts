@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Luv2ShopFormService } from '../../services/luv2-shop-form.service';
-import { Country } from '../../common/country';
-import { State } from '../../common/state';
-import { Luv2ShopValidators } from '../../validators/luv2-shop-validators';
-import { CartService } from '../../services/cart.service';
-import { CheckoutService } from '../../services/checkout.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment.development';
+import { Country } from '../../common/country';
 import { Order } from '../../common/order';
 import { OrderItem } from '../../common/order-item';
-import { Purchase } from '../../common/purchase';
-import { environment } from '../../../environments/environment.development';
 import { PaymentInfo } from '../../common/payment-info';
+import { Purchase } from '../../common/purchase';
+import { State } from '../../common/state';
+import { CartService } from '../../services/cart.service';
+import { CheckoutService } from '../../services/checkout.service';
+import { Luv2ShopFormService } from '../../services/luv2-shop-form.service';
+import { Luv2ShopValidators } from '../../validators/luv2-shop-validators';
 
 @Component({
   selector: 'app-checkout',
@@ -161,14 +161,14 @@ export class CheckoutComponent implements OnInit {
     purchase.customer = this.checkoutFormGroup.controls['customer'].value;
 
     purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
-    const shippingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress?.state));
-    const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress?.country));
+    const shippingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress!.state));
+    const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress!.country));
     purchase.shippingAddress!.state = shippingState.name;
     purchase.shippingAddress!.country = shippingCountry.name;
 
     purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
-    const billingState: State = JSON.parse(JSON.stringify(purchase.billingAddress?.state));
-    const billingCountry: Country = JSON.parse(JSON.stringify(purchase.billingAddress?.country));
+    const billingState: State = JSON.parse(JSON.stringify(purchase.billingAddress!.state));
+    const billingCountry: Country = JSON.parse(JSON.stringify(purchase.billingAddress!.country));
     purchase.billingAddress!.state = billingState.name;
     purchase.billingAddress!.country = billingCountry.name;
 
@@ -177,7 +177,7 @@ export class CheckoutComponent implements OnInit {
     purchase.orderItems = orderItems;
 
     // compute payment info
-    this.paymentInfo.amount = this.totalPrice * 100
+    this.paymentInfo.amount = Math.round(this.totalPrice * 100)
     this.paymentInfo.currency = 'USD'
 
     // if valid form then
@@ -185,7 +185,7 @@ export class CheckoutComponent implements OnInit {
     // - confirm card payment
     // - place order
 
-    if (this.checkoutFormGroup.invalid && this.displayError.textContent === '') {
+    if (!this.checkoutFormGroup.invalid && this.displayError.textContent === '') {
       this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
         response => {
           this.stripe.confirmCardPayment(response.client_secret, {
