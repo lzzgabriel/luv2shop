@@ -41,6 +41,8 @@ export class CheckoutComponent implements OnInit {
   cardElement: any
   displayError: any
 
+  isDisabled = false;
+
   constructor(private formBuilder: FormBuilder,
     private luv2ShopFormService: Luv2ShopFormService,
     private cartService: CartService,
@@ -186,6 +188,7 @@ export class CheckoutComponent implements OnInit {
     // - place order
 
     if (!this.checkoutFormGroup.invalid && this.displayError.textContent === '') {
+      this.isDisabled = true
       this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
         response => {
           this.stripe.confirmCardPayment(response.client_secret, {
@@ -205,15 +208,21 @@ export class CheckoutComponent implements OnInit {
             }
           }, { handleActions: false })
           .then((result: any) => {
-            if (result.error)
+            if (result.error) {
               alert(`There was an error: ${result.error.message}`)
+              this.isDisabled = false
+            }
             else {
               this.checkoutService.placeOrder(purchase).subscribe({
                 next: (res: any) => {
                   alert(`Your order has been received.\nOrder tracking number: ${res.orderTrackingNumber}`)
                   this.resetCart()
+                  this.isDisabled = false
                 },
-                error: (err: any) => alert(`There was an error: ${err.message}`)
+                error: (err: any) => {
+                  alert(`There was an error: ${err.message}`)
+                  this.isDisabled = false
+                }
               })
             }
           })
